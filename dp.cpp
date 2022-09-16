@@ -138,6 +138,60 @@ int main() {
   return 0;
 }
 
+// Multisequence DP --> LCS 
+
+// this can be extended to three rec(i, j, k + 1) rec(i + 1, j , k) rec(i, j + 1, k)
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n, m;
+string a, b;
+int dp[1010][1010];
+
+int rec(int i, int j) {
+  // return lcs of a[i...n - 1] and b[j...m - 1]
+  // pruning 
+
+  // basecase
+  if (i >= n || j >= m) {
+    return 0;
+  }
+  // cache check 
+  if (dp[i][j] != -1) {
+    return dp[i][j];
+  }
+  // compute
+  int ans = 0;
+  ans = max(ans, rec(i + 1, j));
+  ans = max(ans, rec(i, j + 1));
+  if (a[i] == b[i]) {
+    ans = max(ans, 1 + rec(i + 1, j + 1));
+  }
+  // save and return
+  return dp[i][j] = ans;
+}
+
+void solve() {
+  cin >> n >> m;
+  cin >> a >> b;
+  memset(dp, -1, sizeof(dp));
+  cout << rec(0, 0) << "\n";
+}
+
+int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  
+  int tt;
+  cin >> tt;
+  while (tt--) {
+    solve();
+  }
+  return 0;
+}
+
 // L - R DP
 
 #include <bits/stdc++.h>
