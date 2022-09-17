@@ -243,3 +243,44 @@ int main() {
   }
   return 0;
 }
+
+
+// LIS in nlog(n)
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  
+  int n;
+  cin >> n;
+  vector<int> a(n), inserted_data(n);
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+  }
+  vector<int> dp;
+  for (int i = 0; i < n; i++) {
+    if (dp.empty() || dp.back() < a[i]) {
+      dp.push_back(a[i]);
+      inserted_data[i] = dp.size();
+    }
+    else {
+      auto it = lower_bound(a.begin(), a.end(), a[i]);
+      *it = a[i];
+      inserted_data[i] = it - dp.size() + 1;
+    }
+  }
+  vector<int> lis;
+  for (int i = n - 1; i >= 0; i--) {
+    if (inserted_data[i] == cur_len) {
+      lis.push_back(a[i]);
+      cur_len--;
+    }
+  }
+  reverse(lis.begin(), lis.end());
+  cout << dp.size() << "\n";
+  return 0;
+}
