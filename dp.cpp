@@ -268,7 +268,7 @@ int main() {
       inserted_data[i] = dp.size();
     }
     else {
-      auto it = lower_bound(a.begin(), a.end(), a[i]);
+      auto it = lower_bound(dp.begin(), dp.end(), a[i]);
       *it = a[i];
       inserted_data[i] = it - dp.size() + 1;
     }
